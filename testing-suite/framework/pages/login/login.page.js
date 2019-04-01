@@ -1,14 +1,7 @@
 import findBy from './find-by';
-const LoginPage = {
-  Goto,
-  CreateNewUser,
-  Login,
-  Logout,
-  ForgotPassword
-}
 
 const base = "http://localhost:8081";
-async function Goto(){
+export async function Goto(){
   // if user is logged in, call Logout();
   return await browser.get(base)
 }
@@ -16,14 +9,24 @@ async function Goto(){
 async function CreateNewUser(){
 }
 
-async function Login(){
+async function Login({email, password}){
   const nameField     = await browser.findElement(findBy.name)
   const passwordField = await browser.findElement(findBy.password)
   const loginButton   = await browser.findElement(findBy.loginButton)
 
-  nameField.value("test@vipcrowd.com");
-  passwordField.value("12345678");
-  await clickLogin(loginButton, "success")
+  await nameField.sendKeys(email);
+  await passwordField.sendKeys(password);
+  await clickLogin({ button: loginButton })
+}
+
+export async function SucceedLogin(){
+  await Login({email:"evan@vipcrowd.com" , password: "12345678"})
+  await expect(browser.findElement(findBy.loginErrorBox)).rejects.toThrow();
+}
+
+export async function FailLogin(){
+  await Login({email:"zvan@vipcrowd.com" , password: "12345678"})
+  await expect(browser.findElement(findBy.loginErrorBox)).resolves.toBeTruthy();
 }
 
 function Logout(){
@@ -33,14 +36,8 @@ function Logout(){
 function ForgotPassword(){
 }
 
-async function clickLogin(loginButton, goal){
-  const badLoginError   = await browser.findElement(findBy.badLoginError)
-  loginButton.click();
-  const buttonGone = await browser.wait(until.stalenessOf(loginButton), 2000);
-
-  goalValue = (goal==="success"?true:false);
-
-  expect(buttonGone).toBe(goalValue)
+async function clickLogin({button, sleep=500}){
+  await button.click();
+  await browser.sleep(sleep);
 }
 
-export default LoginPage

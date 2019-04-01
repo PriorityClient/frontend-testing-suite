@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest testing-suite/tests"
+    "test": "jest testing-suite/tests",
+    "start": "selenium"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +16,10 @@
     "babel-jest": "^24.5.0",
     "jest": "^24.5.0",
     "jest-environment-webdriver": "^0.2.0",
-    "selenium-webdriver": "^4.0.0-alpha.1"
+    "selenium-server": "^3.141.59",
+    "selenium-side-runner": "^3.5.11",
+    "chromedriver": "^2.46.0",
+    "edgedriver": "^4.17134.1",
+    "geckodriver": "^1.16.0"
   }
 }
