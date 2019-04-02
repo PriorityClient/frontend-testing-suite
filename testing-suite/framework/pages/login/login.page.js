@@ -19,7 +19,7 @@ export async function SucceedLogin(){
 
 export async function FailLogin(){
   await Login({email:"zvan@vipcrowd.com" , password: "12345678"})
-  await browser.findElement(findBy.loginErrorBox)
+  await browser.wait(until.elementLocated(findBy.loginErrorBox))
   await expect(browser.findElement(findBy.loginErrorBox)).resolves.toBeTruthy();
 }
 
