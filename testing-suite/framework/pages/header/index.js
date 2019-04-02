@@ -7,7 +7,9 @@ export async function Logout(){
   userInfoDropdownLink.click();
 
   await browser.wait(until.elementLocated(findBy.floatingMenu))
+  const floatingMenu = await browser.findElement(findBy.floatingMenu)
+
+  await browser.wait(until.elementIsVisible(floatingMenu))
+
   const logout = await browser.findElement(findBy.logout)
-  await logout.click();
-  browser.sleep(500);
 }

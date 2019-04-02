@@ -10,7 +10,7 @@ export const emailPreferences = by.css(`${prefix} .floating-menu a:nth-child(3)`
 export const editTeamInfo = by.css(`${prefix} .floating-menu a:nth-child(4)`)
 export const users = by.css(`${prefix} .floating-menu a:nth-child(5)`)
 export const helpCenter = by.css(`${prefix} .floating-menu a:nth-child(6)`)
-export const logout = by.css(`${prefix} .floating-menu a:nth-child(7)`)
+export const logout = by.css(`${prefix} .floating-menu a:last-of-type`)
 
 export const challenges = by.css(`${prefix} .header__navigation a:nth-child(1)`)
 export const acceptedChallenges = by.css(`${prefix} .header__navigation a:nth-child(2)`)
