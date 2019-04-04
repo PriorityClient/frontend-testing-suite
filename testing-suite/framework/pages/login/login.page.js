@@ -1,9 +1,10 @@
 import * as findBy  from './find-by';
+export { findBy };
 
 const base = "http://localhost:8081";
 export async function Goto(){
-  // if user is logged in, call Logout();
-  return await browser.get(base)
+  await browser.get(base)
+  await browser.wait(until.elementLocated(findBy.signupLink));
 }
 
 async function CreateNewUser(){
@@ -26,7 +27,7 @@ export async function FailLogin(){
 export async function clickForgotPasswordLink(){
   const forgotPasswordLink = await browser.findElement(findBy.forgotPasswordLink)
   await forgotPasswordLink.click();
-  await browser.wait(until.urlIs("#/forgot-password"))
+  await browser.wait(until.urlContains("forgot-password"))
 }
 
 async function clickLogin({button, sleep=100}){

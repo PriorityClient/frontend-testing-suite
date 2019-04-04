@@ -1,3 +1,4 @@
+export const loginForm = by.css(".login-form")
 export const name = by.css("form label:nth-of-type(1) input")
 export const password = by.css("form label:nth-of-type(2) input")
 export const loginButton = by.css(".button")

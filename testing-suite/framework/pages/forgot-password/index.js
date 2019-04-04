@@ -1,12 +1,15 @@
+import * as findBy  from './find-by';
 export async function fillOutEmailAddress(){
+  await browser.wait(until.elementLocated(findBy.emailField))
   const emailField = await browser.findElement(findBy.emailField)
   const requestPinButton = await browser.findElement(findBy.requestPinButton)
-  emailField.sendKeys("evan@vipcrowd.com");
+  await emailField.sendKeys("evan@vipcrowd.com");
   await requestPinButton.click()
-  await browser.wait(until.urlIs("#/reset-password"))
+  await browser.wait(until.urlContains("reset-password"))
 }
 
 export async function fillOutConfirmationPin(){
+  await browser.wait(until.elementLocated(findBy.confirmPasswordField))
   const pinField = await browser.findElement(findBy.pinField)
   const newPasswordField = await browser.findElement(findBy.newPasswordField)
   const confirmPasswordField = await browser.findElement(findBy.confirmPasswordField)
@@ -16,7 +19,6 @@ export async function fillOutConfirmationPin(){
   await newPasswordField.sendKeys("12345678");
   await confirmPasswordField.sendKeys("12345678");
 
-  await requestPinButton.click()
-  await browser.wait(until.urlIs("#/challenges/active"))
-
+  await resetPasswordButton.click()
+  await browser.wait(until.urlContains("challenges/active"))
 }

@@ -3,7 +3,7 @@ import * as OnboardingWorkflow from '../framework/workflows/onboarding';
 import * as HeaderComponent from '../framework/pages/header';
 
 test('should be able to create a new user', async ()=> (
-  LoginPage.Goto()
+  await LoginPage.Goto()
     .then(OnboardingWorkflow.CreateNewUser)
 ))
 
@@ -17,16 +17,15 @@ test('should be able to log in', async()=>(
     .then(LoginPage.SucceedLogin)
 ))
 
-
 test('should be able to log out', async ()=>(
-    await HeaderComponent.Logout()
-))
+  await LoginPage.Goto()
+    .then(LoginPage.SucceedLogin)
+    .then(OnboardingWorkflow.Logout)
+), 15000)
+
 
 test('should be able to reset password', async ()=>{
   await LoginPage.Goto()
   await OnboardingWorkflow.ForgotPassword()
-  //expect(Header.userNameDisplay).toBe(User.fullName)
-})
-
-
-
+  await expect(HeaderComponent.userNameDisplay()).resolves.toBe("Evan Short")
+}, 10000)

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest testing-suite/tests",
+    "test": "jest testing-suite/tests --runInBand",
+    "test:write": "node --inspect-brk node_modules/.bin/jest testing-suite/tests",
     "start": "selenium"
   },
   "keywords": [],
