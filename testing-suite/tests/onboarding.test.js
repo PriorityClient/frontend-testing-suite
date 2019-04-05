@@ -20,7 +20,7 @@ describe("should be able to log in", ()=>{
   test('with an existing user', async()=>{
     await LoginPage.Goto()
       .then(LoginPage.SucceedLogin)
-    await expect(browser.findElement(LoginPage.findBy.loginErrorBox)).rejects.toThrow();
+    await expect(HeaderComponent.userNameDisplay()).resolves.toBe("Evan Short")
   })
 
   test('by resetting the password', async ()=>{

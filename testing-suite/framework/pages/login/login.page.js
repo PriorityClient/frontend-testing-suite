@@ -10,15 +10,19 @@ export async function Goto(){
 async function CreateNewUser(){
   const signupLink = await browser.findElement(findBy.signupLink)
   await signupLink.click();
-  await expect(browser.getCurrentUrl()).resolves.toBe("#/signup");
+  await browser.wait(until.urlContains("signup"))
 }
 
 export async function SucceedLogin(){
+  const signupLink = await browser.findElement(findBy.signupLink)
   await Login({email:"evan@vipcrowd.com" , password: "12345678"})
+  await browser.wait(until.stalenessOf(signupLink))
 }
 
 export async function FailLogin(){
+  const loginErrorBox = await browser.findElement(findBy.loginErrorBox)
   await Login({email:"zvan@vipcrowd.com" , password: "12345678"})
+  await browser.wait(until.stalenessOf(loginErrorBox))
   await browser.wait(until.elementLocated(findBy.loginErrorBox))
 }
 
