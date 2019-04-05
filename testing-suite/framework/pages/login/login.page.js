@@ -15,13 +15,11 @@ async function CreateNewUser(){
 
 export async function SucceedLogin(){
   await Login({email:"evan@vipcrowd.com" , password: "12345678"})
-  await expect(browser.findElement(findBy.loginErrorBox)).rejects.toThrow();
 }
 
 export async function FailLogin(){
   await Login({email:"zvan@vipcrowd.com" , password: "12345678"})
   await browser.wait(until.elementLocated(findBy.loginErrorBox))
-  await expect(browser.findElement(findBy.loginErrorBox)).resolves.toBeTruthy();
 }
 
 export async function clickForgotPasswordLink(){
@@ -30,9 +28,10 @@ export async function clickForgotPasswordLink(){
   await browser.wait(until.urlContains("forgot-password"))
 }
 
-async function clickLogin({button, sleep=100}){
-  await button.click();
-  await browser.sleep(sleep);
+export async function clickSignupLink(){
+  const signupLink = await browser.findElement(findBy.signupLink)
+  await signupLink.click();
+  await browser.wait(until.urlContains("signup"))
 }
 
 async function Login({email, password}){
@@ -42,6 +41,6 @@ async function Login({email, password}){
 
   await nameField.sendKeys(email);
   await passwordField.sendKeys(password);
-  await clickLogin({ button: loginButton })
+  await loginButton.click();
 }
 

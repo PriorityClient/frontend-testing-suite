@@ -1,6 +1,6 @@
 const prefix = `.app-container__header`
 
-export const userInfoDropdownLink = by.css(`${prefix} .header__user-info a:first-of-type`)
+export const userInfoDropdownLink = by.css(`${prefix} .header__user-info a.clickable:first-of-type`)
 export const floatingMenu = by.css(`${prefix} .floating-menu`)
 
 

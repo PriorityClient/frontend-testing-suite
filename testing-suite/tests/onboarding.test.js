@@ -2,30 +2,36 @@ import * as LoginPage from '../framework/pages/login/login.page';
 import * as OnboardingWorkflow from '../framework/workflows/onboarding';
 import * as HeaderComponent from '../framework/pages/header';
 
-test('should be able to create a new user', async ()=> (
-  await LoginPage.Goto()
-    .then(OnboardingWorkflow.CreateNewUser)
-))
-
-test('failed login should show an error message', async ()=>(
+test('failed login should show an error message', async ()=>{
   await LoginPage.Goto()
     .then(LoginPage.FailLogin)
-))
+  await expect(browser.findElement(LoginPage.findBy.loginErrorBox)).resolves.toBeTruthy();
+})
 
-test('should be able to log in', async()=>(
-  await LoginPage.Goto()
-    .then(LoginPage.SucceedLogin)
-))
+describe("should be able to log in", ()=>{
 
-test('should be able to log out', async ()=>(
+  afterEach(OnboardingWorkflow.Logout);
+
+  test('by creating a new user', async ()=> {
+    await OnboardingWorkflow.CreateNewUser()
+    await expect(HeaderComponent.userNameDisplay()).resolves.toBe("Test User")
+  }, 10000)
+
+  test('with an existing user', async()=>{
+    await LoginPage.Goto()
+      .then(LoginPage.SucceedLogin)
+    await expect(browser.findElement(LoginPage.findBy.loginErrorBox)).rejects.toThrow();
+  })
+
+  test('by resetting the password', async ()=>{
+    await OnboardingWorkflow.ForgotPassword()
+    await expect(HeaderComponent.userNameDisplay()).resolves.toBe("Evan Short")
+  }, 10000)
+})
+
+test('should be able to log out', async ()=>{
   await LoginPage.Goto()
     .then(LoginPage.SucceedLogin)
     .then(OnboardingWorkflow.Logout)
-), 15000)
-
-
-test('should be able to reset password', async ()=>{
-  await LoginPage.Goto()
-  await OnboardingWorkflow.ForgotPassword()
-  await expect(HeaderComponent.userNameDisplay()).resolves.toBe("Evan Short")
-}, 10000)
+  await expect(browser.findElement(LoginPage.findBy.loginForm)).resolves.toBeTruthy();
+}, 15000)
